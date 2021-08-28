@@ -19,15 +19,32 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDb = async() => {
     await CampGround.deleteMany({});
-    for(let i = 0; i < 50; i++){
+    for(let i = 0; i < 200; i++){
         const price = Math.floor(Math.random() * 20) + 10;
         const random1000 = Math.floor(Math.random() * 1000);
         const camp = new CampGround({
+            author: '611d30b65fd5c4331c87c9c0',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
-            image:'https://source.unsplash.com/collection/483251/1600x900',
             description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti aliquid aut laboriosam, tenetur dolore saepe molestiae, reprehenderit quasi harum quod magnam quos ea dolor ipsum voluptatum porro ab, illo eius?',
-            price
+            price,
+            geometry: {
+                type: "Point",
+                coordinates: [
+                    cities[random1000].longitude,
+                    cities[random1000].latitude
+                ]
+            },
+            images: [
+                {
+                  url: 'https://res.cloudinary.com/dspx5wwiu/image/upload/v1629715205/Yelp-Camp/gmnsekwnhw8mwmhihnrq.jpg',
+                  filename: 'Yelp-Camp/gmnsekwnhw8mwmhihnrq'
+                },
+                {
+                  url: 'https://res.cloudinary.com/dspx5wwiu/image/upload/v1629715206/Yelp-Camp/vpkt5ylolgu4l1qe4eex.jpg',
+                  filename: 'Yelp-Camp/vpkt5ylolgu4l1qe4eex'
+                }
+            ]
         })
         await camp.save();
     }
